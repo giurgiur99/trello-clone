@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class ConfirmDialogRequest {\n  constructor(title, message) {\n    this.title = title;\n    this.message = message;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

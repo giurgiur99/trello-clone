@@ -1,0 +1,33 @@
+<div class="container">
+  <mat-list class="list" fxLayoutGap="2px">
+    <mat-list-item *ngFor="let board of boards" class="list__item">
+      <div fxFlex="90" class="cursor-pointer" [routerLink]="['/b', board.id]">
+        <mat-card-title> {{ board.name }} </mat-card-title>
+      </div>
+      <div class="buttons" fxFlex fxLayoutAlign="center center">
+        <button
+          class="buttons--custom"
+          mat-button
+          color="accent"
+          (click)="updateBoard(board.id, board.name)"
+        >
+          <mat-icon> short_text</mat-icon>
+        </button>
+        <button
+          class="buttons--custom"
+          mat-button
+          color="warn"
+          (click)="deleteBoard(board.id)"
+        >
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+    </mat-list-item>
+    <div>
+      <button class="button" mat-raised-button fxFlex (click)="saveBoard()">
+        <mat-icon>add_box</mat-icon>
+        <span>Add new Board</span>
+      </button>
+    </div>
+  </mat-list>
+</div>

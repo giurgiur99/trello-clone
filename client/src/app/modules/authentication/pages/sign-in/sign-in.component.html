@@ -1,0 +1,34 @@
+<form class="form" fxLayout="column" [formGroup]="signInForm" (keydown.enter)="$event.preventDefault()"
+    (ngSubmit)="signIn(formDirective)" #formDirective="ngForm">
+    <h1 fxFlexAlign="center">Login</h1>
+    <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="getSignInForm.username.errors?.required">
+            You must provide a <strong>username</strong>
+        </mat-error>
+        <mat-error *ngIf="getSignInForm.username.errors?.invalidPassword">
+            Letters, numbers, dashes, and underscores only.
+        </mat-error>
+        <mat-error *ngIf="getSignInForm.username.errors?.MinLengthAndMaxlengthValidator">
+            Password must be greater than 4 and less than 20 characteres
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>password</mat-label>
+        <input matInput autocomplete="off" [type]="isHide ? 'password' : 'text'" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="toggleIsHide()" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="isHide">
+            <mat-icon>{{isHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="getSignInForm.password.errors?.required">
+            You must provide a <strong>password</strong>
+        </mat-error>
+        <mat-error *ngIf="getSignInForm.password.errors?.MinLengthAndMaxlengthValidator">
+            Password must be greater than 6 and less than 30 characteres
+        </mat-error>
+    </mat-form-field>
+    <button mat-button color="primary" (click)="signUpRoute()">Register</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="signInForm.invalid">Login</button>
+</form>

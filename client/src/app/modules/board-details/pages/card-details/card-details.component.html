@@ -1,0 +1,162 @@
+<div fxLayout="row">
+  <div
+    fxFlex.xl="700px"
+    fxFlex.lg="700px"
+    fxFlex.md="500px"
+    fxFlex.sm="400px"
+    class="card"
+  >
+    <h2
+      mat-dialog-title
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign.xs="center center"
+    >
+      <div *ngIf="card.cover?.file" fxFex="100px">
+        <img
+          src="data:image/jpg;base64,{{ card.cover?.file.data }}"
+          class="card__avatar"
+        />
+      </div>
+      <div fxFlex class="card__header">
+        <h1 class="card__title">{{ card.name }}</h1>
+        <h4 class="card__subtitle">
+          In list <strong>{{ data.column }}</strong>
+        </h4>
+      </div>
+    </h2>
+    <mat-dialog-content fxLayout="column" class="card__body">
+      <!-- Add Description -->
+      <div fxLayout="row">
+        <span class="material-icons"> description </span>
+        <h3 class="card__title">Description</h3>
+      </div>
+      <form
+        fxLayout="column"
+        fxLayoutAlign="start"
+        #cardForm="ngForm"
+        (ngSubmit)="updateCardDescription()"
+        class="card__content"
+      >
+        <mat-form-field fxFlex>
+          <textarea
+            name="description"
+            InputTextFilter
+            matInput
+            (focus)="IsShown = true"
+            #description="ngModel"
+            [(ngModel)]="cardUpdate.description"
+            value="{{ card.description }}"
+          ></textarea>
+        </mat-form-field>
+        <div *ngIf="IsShown === true" class="margin-bottom">
+          <button
+            class=""
+            mat-button
+            color="primary"
+            type="button"
+            (click)="closeCardForm(card.description)"
+          >
+            <mat-icon>close</mat-icon>Cancel
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!cardForm.valid"
+          >
+            <mat-icon>add</mat-icon>Save
+          </button>
+        </div>
+      </form>
+      <!-- end/Add Description -->
+
+      <!-- Add Attachments -->
+      <div fxLayout="row" fxLayoutAlign="flex-start flex-start">
+        <span class="material-icons"> attach_file </span>
+        <h3 class="card__title">Attachments</h3>
+        <input
+          hidden
+          #fileInput
+          type="file"
+          multiple
+          name="photo"
+          ng2FileSelect
+          [uploader]="uploader"
+        />
+        <button mat-button color="primary" (click)="fileInput.click()">
+          <mat-icon>add_box</mat-icon>
+          Add a pic
+        </button>
+      </div>
+      <!-- end/Add Attachments -->
+
+      <!-- Attachments -->
+      <mat-list class="card__content">
+        <mat-list-item
+          *ngFor="let attachment of card.attachments; let i = index"
+          class="card__item"
+        >
+          <div fxLayout.xs="column" fxLayoutAlign.xs="center center" fxFlex>
+            <div fxFlex="100px">
+              <img
+                class="card__avatar"
+                *ngIf="
+                  attachment.contentType === 'image/jpg' ||
+                    attachment.contentType === 'image/png' ||
+                    attachment.contentType === 'image/jpeg' ||
+                    attachment.contentType === 'image/gif';
+                  else second
+                "
+                src="data:image/jpeg;base64,{{ attachment.file.data }}"
+              />
+              <ng-template #second>
+                <h3 fxLayoutAlign="center center">
+                  <strong> {{ attachmentExtensions[i] }}</strong>
+                </h3>
+              </ng-template>
+            </div>
+            <div fxFlex fxLayout="column" class="card__content">
+              <div fxFlex>Name: {{ attachment.name }}</div>
+              <div fxFlex>
+                Date:
+                {{ attachment.createdDate | date: "dd/MM/yyyy h:mm:ss a" }}
+              </div>
+              <div fxFlex>
+                <button
+                  mat-button
+                  color="accent"
+                  (click)="deleteAttachmentById(attachment.id)"
+                >
+                  <mat-icon>delete_permanent</mat-icon>Delete
+                </button>
+                <button
+                  *ngIf="
+                    (attachment.contentType === 'image/jpg' ||
+                      attachment.contentType === 'image/png' ||
+                      attachment.contentType === 'image/jpeg') &&
+                    card.cover?.idAttachment !== attachment.id
+                  "
+                  mat-button
+                  color="accent"
+                  (click)="setCover(card.id, attachment.id)"
+                >
+                  <mat-icon>add_photo_alternate</mat-icon>Add Cover
+                </button>
+                <button
+                  mat-button
+                  color="accent"
+                  *ngIf="card.cover?.idAttachment === attachment.id"
+                  (click)="removeCover(card.id, attachment.id)"
+                >
+                  <mat-icon>delete</mat-icon>Remove cover
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-list>
+      <!-- end/Attachments -->
+    </mat-dialog-content>
+  </div>
+</div>

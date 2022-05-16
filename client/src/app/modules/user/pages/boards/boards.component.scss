@@ -1,0 +1,30 @@
+.list {
+    display: flex;
+    width: auto;
+    height: auto;
+
+    &__item {
+        width: auto !important;
+        background-color: var(--main-color);
+        border-radius: 3px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+    }
+}
+
+.buttons {
+    :nth-of-type(1) {
+        margin-left: 14px;
+    }
+
+    &--custom {
+        min-width: 0px;
+        padding: 0px;
+        height: 48px;
+    }
+}
+
+.button {
+    height: 48px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}

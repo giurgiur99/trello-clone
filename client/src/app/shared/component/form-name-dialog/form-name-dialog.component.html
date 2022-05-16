@@ -1,0 +1,17 @@
+<mat-dialog-content>
+    <form #cardForm="ngForm">
+        <mat-form-field>
+            <mat-label>name</mat-label>
+            <input matInput name="name" type="text" InputTextFilter maxlength="40" onDrag="return false"
+                onDrop="return false" onPaste="return false" placeholder="name" #name="ngModel" [(ngModel)]="data.name"
+                [value]="data.name" autocomplete="off" required>
+            <mat-error *ngIf="name.errors && (name.dirty || name.touched)">
+                <div *ngIf="name.errors.required">Password is required</div>
+            </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="primary" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="cardForm.invalid" (click)="confirm()">Confirm</button>
+</mat-dialog-actions>

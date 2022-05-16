@@ -1,0 +1,57 @@
+<form class="form" fxLayout="column" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+    <h1 fxFlexAlign="center">Register</h1>
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput id="name" formControlName="name" type="text" required>
+        <mat-error *ngIf="getSignUpForm.name.errors?.required">
+            You must provide a <strong>name</strong>
+        </mat-error>
+        <mat-error *ngIf="getSignUpForm.name.errors?.maxlength">
+            Name must be less than 40 characteres
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput id="username" type="text" formControlName="username" required>
+        <mat-error *ngIf="getSignUpForm.username.errors?.required">
+            You must provide a <strong>username</strong>
+        </mat-error>
+        <mat-error *ngIf="getSignUpForm.username.errors?.invalidPassword">
+            Letters, numbers, dashes, and underscores only.
+        </mat-error>
+        <mat-error *ngIf="getSignUpForm.username.errors?.MinLengthAndMaxlengthValidator">
+            Password must be greater than 4 and less than 20 characteres
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input matInput id="password" type="password" formControlName="password" required>
+        <mat-error *ngIf="getSignUpForm.password.errors?.required">
+            You must provide a <strong>password</strong>
+        </mat-error>
+        <mat-error *ngIf="getSignUpForm.password.errors?.invalidPassword">
+            Letters, numbers, dashes, and password only.
+        </mat-error>
+        <mat-error *ngIf="getSignUpForm.password.errors?.MinLengthAndMaxlengthValidator">
+            Password must be greater than 6 and less than 30 characteres
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Enter your email</mat-label>
+        <input matInput id="email" type="email" formControlName="email" placeholder="email@gmail.com" required>
+        <mat-error *ngIf="getSignUpForm.email.errors?.required">
+            You must provide a <strong>email</strong>
+        </mat-error>
+        <mat-error *ngIf="getSignUpForm.email.errors?.maxlength">
+            Email must be less than 40 characteres
+        </mat-error>
+        <mat-error *ngIf="getSignUpForm.email.errors?.email">
+            Not a email valid
+        </mat-error>
+    </mat-form-field>
+    <button color="primary" mat-button (click)="goToSignIn()">Sign in instead</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="signUpForm.invalid">Register</button>
+</form>

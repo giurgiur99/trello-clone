@@ -1,0 +1,12 @@
+<header class="header">
+  <mat-toolbar color="warn">
+    <mat-toolbar-row>
+      <a (click)="routerBoards()" class="header__item">Boards</a>
+      <span fxFlex="1 1 0"></span>
+      <div fxShow="true">
+        <a mat-button (click)="routerProfile()" class="header__item">Profile</a>
+        <a mat-button (click)="logout()" class="header__item">Logout</a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</header>

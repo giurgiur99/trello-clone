@@ -1,0 +1,40 @@
+%word-wrap {
+  white-space: normal !important;
+  word-break: break-word;
+}
+
+.card {
+  &__avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__header {
+    padding-left: 10px;
+    @extend %word-wrap;
+  }
+
+  &__body {
+    padding: 10px;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+  }
+
+  &__content {
+    padding: 10px;
+    @extend %word-wrap;
+  }
+
+  &__item {
+    height: auto;
+    padding-top: 10px;
+  }
+}

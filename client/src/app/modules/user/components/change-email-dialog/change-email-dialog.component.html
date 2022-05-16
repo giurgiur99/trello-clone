@@ -1,0 +1,33 @@
+<h1 mat-dialog>Update email</h1>
+<form #emailForm="ngForm" (ngSubmit)="confirm()">
+    <div mat-dialog-content>
+        <mat-form-field class="width-full">
+            <input matInput type="password" (keydown.space)="$event.preventDefault()" onDrag="return false"
+                onDrop="return false" onPaste="return false" autocomplete="off" name="currentPassword"
+                (change)="clearErrorBackEndValidation()" placeholder="Your password" #currentPassword="ngModel"
+                [(ngModel)]="emailRequest.currentPassword" minlength="6" maxlength="20" required>
+            <mat-error *ngIf="currentPassword.errors && (currentPassword.dirty || currentPassword.touched)">
+                <div *ngIf="currentPassword.errors.required">Password is required</div>
+                <div *ngIf="currentPassword.errors.minlength">Password must be in 6 and 20</div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="width-full">
+            <input matInput type="email" autocomplete="off" (keydown.space)="$event.preventDefault()"
+                onDrag="return false" onDrop="return false" autocomplete="off" onPaste="return false" name="email"
+                (ngModelChange)="emailValidator()" placeholder="New Email" #email="ngModel"
+                [(ngModel)]="emailRequest.email" maxlength="40" required>
+            <mat-error *ngIf="email.errors && (email.dirty || email.touched)">
+                <div *ngIf="email.errors.required">Email is required</div>
+                <div *ngIf="email?.errors?.mismatch">You have entered your current email address.</div>
+            </mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="errorBackEnd?.message">
+            <p class="error-pre-line">{{errorBackEnd.message}}</p>
+        </mat-error>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button type="button" (click)="cancel()">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="emailForm.invalid || errorBackEnd.message"
+            type="submit">Confirm</button>
+    </div>
+</form>

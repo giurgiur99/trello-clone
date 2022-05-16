@@ -1,0 +1,153 @@
+<nav-menu></nav-menu>\
+<div class="select-class">
+  <h3>Select an user</h3>
+  <mat-form-field appearance="fill">
+    <mat-label>User list</mat-label>
+    <mat-select [(value)]="selectedUser">
+      <mat-option
+        *ngFor="let user of users"
+        [value]="user.name"
+        (onSelectionChange)="updateBoardList(user)"
+      >
+        {{ user.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h3>Select a board</h3>
+  <mat-form-field appearance="fill">
+    <mat-label>Board list</mat-label>
+    <mat-select [(value)]="selectedBoard">
+      <mat-option
+        *ngFor="let board of boards"
+        [value]="board.name"
+        (onSelectionChange)="updateBoardView(board)"
+      >
+        {{ board.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<br />
+<br />
+
+<!-- ----------------------------------- -->
+
+<div class="board-view">
+  <section class="board board--wrapper" fxLayout="column ">
+    <div class="board__header">
+      <mat-toolbar>
+        <h4 class="board__title">{{ board.name }}</h4>
+      </mat-toolbar>
+      <br />
+    </div>
+    <div
+      fxLayout="row"
+      fxLayoutGap="15px"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      [cdkDropListData]="board.columns"
+      (cdkDropListDropped)="onDropColumns($event)"
+    >
+      <!-- Columns -->
+      <mat-card
+        fxFlex="250px"
+        fxFlexAlign="start"
+        *ngFor="let column of board.columns"
+        class="columns"
+        cdkDrag
+      >
+        <mat-card-title class="columns__title">
+          {{ column.name }}
+        </mat-card-title>
+        <mat-card-content>
+          <!-- Cards -->
+          <mat-list
+            class="cards"
+            fxLayout="column"
+            fxLayoutGap="12px"
+            cdkDropList
+            id="{{ column.id }}"
+            [cdkDropListData]="column.cards"
+            (cdkDropListDropped)="onDropCards($event)"
+            [cdkDropListConnectedTo]="connectedTo"
+          >
+            <mat-list-item
+              *ngFor="let card of column.cards"
+              class="cards__item"
+              cdkDrag
+              [cdkDragData]="card"
+            >
+              <div matLine *ngIf="card.cover?.file">
+                <img
+                  src="data:image/jpeg;base64,{{ card.cover?.file.data }}"
+                  alt="{{ card.cover?.name }}"
+                  class="cards__thumbnail"
+                />
+              </div>
+              <div matLine (click)="openCardDialog(card.id, column.id)">
+                <h4 class="cards__title">{{ card.name }}</h4>
+              </div>
+              <div matLine fxShow="true" class="cards__buttons">
+                <mat-icon> attach_file </mat-icon>
+                <span>{{ card.fileSize }}</span>
+                <span fxFlex="1 1 0"></span>
+                <span fxShow="true">
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    (click)="deleteCard(card.id)"
+                  >
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    (click)="updateCardName(card.id, card.name)"
+                  >
+                    <mat-icon> short_text</mat-icon>
+                  </button>
+                </span>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+          </mat-list>
+          <!--  end/Cards -->
+        </mat-card-content>
+        <mat-card-actions fxLayout="column">
+          <button fxFlex mat-raised-button (click)="saveCard(column.id)">
+            <mat-icon>add_box</mat-icon>
+            <span> Add new card</span>
+          </button>
+          <span fxLayout="row" class="columns__bottom">
+            <button
+              fxFlex="50"
+              fxLayoutAlign="center center"
+              mat-raised-button
+              color="warn"
+              (click)="deleteColumn(column.id)"
+            >
+              Delete column
+            </button>
+            <button
+              fxFlex="50"
+              fxLayoutAlign="center center"
+              mat-raised-button
+              (click)="updateColumnName(column.id, column.name)"
+            >
+              Update column
+            </button>
+          </span>
+        </mat-card-actions>
+      </mat-card>
+      <!--  end/Columns -->
+      <div>
+        <button mat-raised-button (click)="saveColumn()">
+          <mat-icon>add_box</mat-icon>
+          <span> Add new Column</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

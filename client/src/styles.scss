@@ -1,0 +1,58 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+  --main-color: #fff;
+}
+
+html,
+body {
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body {
+  background-color: #ffffffde;
+}
+
+.title {
+  color: white;
+}
+
+.cards .mat-list-item-content {
+  padding: 0 !important ;
+}
+
+.form {
+  width: 280px !important;
+  background-color: var(--main-color);
+  padding: 1rem;
+  border-radius: 3px;
+  box-shadow: 0 4px 2px -2px rgb(0, 0, 0);
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media only screen and (min-width: 780px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
